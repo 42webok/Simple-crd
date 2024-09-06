@@ -305,8 +305,8 @@ function handleMediaQueryChange(event) {
 // script.js
 
 let currentSlide = 0;
-const slides1 = document.querySelectorAll('.slide'); // Changed variable name to slides1
-const totalSlides = slides1.length; // Updated to use slides1
+const slides1 = document.querySelectorAll('.slide');
+const totalSlides1 = slides1.length; // Changed variable name to totalSlides1
 const slider = document.querySelector('.slider');
 const prevButton = document.getElementById('prev-slide');
 const nextButton = document.getElementById('next-slide');
@@ -321,12 +321,12 @@ function updateSlide(index) {
 }
 
 function nextSlide() {
-    const nextIndex = (currentSlide + 1) % totalSlides;
+    const nextIndex = (currentSlide + 1) % totalSlides1; // Updated to use totalSlides1
     updateSlide(nextIndex);
 }
 
 function prevSlide() {
-    const prevIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+    const prevIndex = (currentSlide - 1 + totalSlides1) % totalSlides1; // Updated to use totalSlides1
     updateSlide(prevIndex);
 }
 
@@ -356,7 +356,7 @@ function handleDragEnd(event) {
     slider.style.transition = 'transform 0.3s ease';
 
     const dx = (event.pageX || (event.changedTouches && event.changedTouches[0].pageX)) - startX;
-    const slideWidth = slider.offsetWidth / totalSlides;
+    const slideWidth = slider.offsetWidth / totalSlides1; // Updated to use totalSlides1
     if (dx < -slideWidth / 3) {
         nextSlide();
     } else if (dx > slideWidth / 3) {
