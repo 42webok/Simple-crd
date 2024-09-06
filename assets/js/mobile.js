@@ -307,7 +307,7 @@ function handleMediaQueryChange(event) {
 let currentSlide = 0;
 const slides1 = document.querySelectorAll('.slide');
 
-const totalSlides1 = slides1.length;
+const totalSlides = slides1.length;
 const slider = document.querySelector('.slider');
 const prevButton = document.getElementById('prev-slide');
 const nextButton = document.getElementById('next-slide');
