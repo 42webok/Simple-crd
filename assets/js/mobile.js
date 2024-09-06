@@ -312,7 +312,7 @@ const prevButton = document.getElementById('prev-slide');
 const nextButton = document.getElementById('next-slide');
 
 let isDragging = false;
-let startX;
+let startX1;
 let startTransformX;
 
 function updateSlide(index) {
@@ -335,7 +335,7 @@ nextButton.addEventListener('click', nextSlide);
 
 function handleDragStart(event) {
     isDragging = true;
-    startX = event.pageX || event.touches[0].pageX;
+    startX1 = event.pageX || event.touches[0].pageX;
     const transformMatrix = getComputedStyle(slider).transform;
     startTransformX = transformMatrix === 'none' ? 0 : parseInt(transformMatrix.split(',')[4]);
     slider.style.transition = 'none';
@@ -345,7 +345,7 @@ function handleDragMove(event) {
     if (!isDragging) return;
 
     const currentX = event.pageX || event.touches[0].pageX;
-    const dx = currentX - startX;
+    const dx = currentX - startX1;
     slider.style.transform = `translateX(${startTransformX + dx}px)`;
 }
 
@@ -355,7 +355,7 @@ function handleDragEnd(event) {
 
     slider.style.transition = 'transform 0.3s ease';
 
-    const dx = (event.pageX || (event.changedTouches && event.changedTouches[0].pageX)) - startX;
+    const dx = (event.pageX || (event.changedTouches && event.changedTouches[0].pageX)) - startX1;
     const slideWidth = slider.offsetWidth / totalSlides1; // Updated to use totalSlides1
     if (dx < -slideWidth / 3) {
         nextSlide();
