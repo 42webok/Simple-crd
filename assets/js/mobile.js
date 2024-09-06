@@ -305,15 +305,14 @@ function handleMediaQueryChange(event) {
 // script.js
 
 let currentSlide = 0;
-const slides1 = document.querySelectorAll('.slide');
-
-const totalSlides = slides1.length;
+const slides1 = document.querySelectorAll('.slide'); // Changed variable name to slides1
+const totalSlides = slides1.length; // Updated to use slides1
 const slider = document.querySelector('.slider');
 const prevButton = document.getElementById('prev-slide');
 const nextButton = document.getElementById('next-slide');
 
 let isDragging = false;
-let startX1;
+let startX;
 let startTransformX;
 
 function updateSlide(index) {
@@ -334,19 +333,19 @@ function prevSlide() {
 prevButton.addEventListener('click', prevSlide);
 nextButton.addEventListener('click', nextSlide);
 
-// Common drag handler for both mouse and touch
 function handleDragStart(event) {
     isDragging = true;
-    startX1 = event.pageX || event.touches[0].pageX; // Handle both mouse and touch
-    startTransformX = parseInt(getComputedStyle(slider).transform.split(',')[4]) || 0;
-    slider.style.transition = 'none'; // Disable transition while dragging
+    startX = event.pageX || event.touches[0].pageX;
+    const transformMatrix = getComputedStyle(slider).transform;
+    startTransformX = transformMatrix === 'none' ? 0 : parseInt(transformMatrix.split(',')[4]);
+    slider.style.transition = 'none';
 }
 
 function handleDragMove(event) {
     if (!isDragging) return;
 
-    const currentX = event.pageX || event.touches[0].pageX; // Handle both mouse and touch
-    const dx = currentX - startX1;
+    const currentX = event.pageX || event.touches[0].pageX;
+    const dx = currentX - startX;
     slider.style.transform = `translateX(${startTransformX + dx}px)`;
 }
 
@@ -354,9 +353,9 @@ function handleDragEnd(event) {
     if (!isDragging) return;
     isDragging = false;
 
-    slider.style.transition = 'transform 0.3s ease'; // Re-enable transition after dragging
+    slider.style.transition = 'transform 0.3s ease';
 
-    const dx = (event.pageX || event.changedTouches[0].pageX) - startX1;
+    const dx = (event.pageX || (event.changedTouches && event.changedTouches[0].pageX)) - startX;
     const slideWidth = slider.offsetWidth / totalSlides;
     if (dx < -slideWidth / 3) {
         nextSlide();
@@ -367,13 +366,11 @@ function handleDragEnd(event) {
     }
 }
 
-// Mouse event listeners
 slider.addEventListener('mousedown', handleDragStart);
 window.addEventListener('mousemove', handleDragMove);
 window.addEventListener('mouseup', handleDragEnd);
 window.addEventListener('mouseleave', handleDragEnd);
 
-// Touch event listeners
 slider.addEventListener('touchstart', handleDragStart);
 slider.addEventListener('touchmove', handleDragMove);
 slider.addEventListener('touchend', handleDragEnd);
